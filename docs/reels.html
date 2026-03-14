@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body, html { margin: 0; padding: 0; overflow: hidden; height: 100%; width: 100%; background: #000; }
+    #player-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      /* 릴스 비율에 맞춰 높이 조절 (필요시 조정) */
+      height: calc(100vw * 1.77); 
+      max-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="player-wrapper">
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const reelId = params.get('id');
+    
+      if (reelId) {
+        // 1. 주소에서 'reels'를 'p'로 바꿔봅니다. (인스타그램이 가장 잘 허용하는 경로)
+        // 2. 뒤에 반드시 /embed/ 를 붙입니다.
+        const embedUrl = `https://www.instagram.com/p/${reelId}/embed/`;
+        
+        document.body.innerHTML = `
+          <iframe 
+            src="${embedUrl}" 
+            width="100%" 
+            height="100%" 
+            frameborder="0" 
+            scrolling="no" 
+            allowtransparency="true">
+          </iframe>`;
+      }
+    </script>
+  </div>
+</body>
+</html>
