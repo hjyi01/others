@@ -2,42 +2,32 @@
 <html>
 <head>
   <style>
-    body, html { margin: 0; padding: 0; overflow: hidden; height: 100%; width: 100%; background: #000; }
-    #player-wrapper {
+    body, html { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #000; }
+    /* 영상만 보여주기 위한 '창문' 역할 */
+    #crop-container {
       position: relative;
       width: 100%;
       height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden;
     }
     iframe {
-      border: none;
+      position: absolute;
+      top: -50px; /* 상단 헤더 부분 가리기 */
+      left: 0;
       width: 100%;
-      /* 릴스 비율에 맞춰 높이 조절 (필요시 조정) */
-      height: calc(100vw * 1.77); 
-      max-height: 100vh;
+      height: calc(100% + 100px); /* 위아래를 더 크게 해서 가려진 만큼 보충 */
+      border: none;
     }
   </style>
 </head>
 <body>
-  <div id="player-wrapper">
+  <div id="crop-container">
     <script>
       const params = new URLSearchParams(window.location.search);
       const reelId = params.get('id');
-      
       if (reelId) {
-        // 'reels' 대신 'reel'을 사용하고 뒤에 /embed/를 붙입니다.
-        // /captioned=0 옵션을 주면 설명란을 제거하고 영상에 집중합니다.
-        document.write(`
-          <iframe 
-            src="https://www.instagram.com/reel/${reelId}/embed/captioned=0" 
-            allowtransparency="true" 
-            allowfullscreen="true" 
-            frameborder="0" 
-            scrolling="no">
-          </iframe>
-        `);
+        // 'p' 경로가 거부 반응이 가장 적습니다.
+        document.write(`<iframe src="https://www.instagram.com/p/${reelId}/embed/"></iframe>`);
       }
     </script>
   </div>
