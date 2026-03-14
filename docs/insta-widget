@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body, html { margin: 0; padding: 0; overflow: hidden; height: 100%; width: 100%; }
+    #player-container { display: flex; justify-content: center; align-items: center; height: 100vh; }
+    iframe { border: none; width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="player-container"></div>
+  <script>
+    // URL에서 reel_id 파라미터를 읽어옵니다. (예: reel.html?id=C_xyz123)
+    const params = new URLSearchParams(window.location.search);
+    const reelId = params.get('id');
+    
+    if (reelId) {
+      const container = document.getElementById('player-container');
+      // 인스타그램 공식 임베드 URL 구조 활용
+      container.innerHTML = `<iframe src="https://www.instagram.com/reels/${reelId}/embed/" allowtransparency="true" allowfullscreen="true" frameborder="0" scrolling="no"></iframe>`;
+    } else {
+      document.body.innerHTML = "릴스 ID가 입력되지 않았습니다.";
+    }
+  </script>
+</body>
+</html>
