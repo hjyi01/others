@@ -3,7 +3,6 @@
 <head>
   <style>
     body, html { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #000; }
-    /* 영상만 보여주기 위한 '창문' 역할 */
     #crop-container {
       position: relative;
       width: 100%;
@@ -12,10 +11,10 @@
     }
     iframe {
       position: absolute;
-      top: -50px; /* 상단 헤더 부분 가리기 */
+      top: -50px;
       left: 0;
       width: 100%;
-      height: calc(100% + 100px); /* 위아래를 더 크게 해서 가려진 만큼 보충 */
+      height: calc(100% + 100px);
       border: none;
     }
   </style>
@@ -26,8 +25,7 @@
       const params = new URLSearchParams(window.location.search);
       const reelId = params.get('id');
       if (reelId) {
-        // 'p' 경로가 거부 반응이 가장 적습니다.
-        document.write(`<iframe src="https://www.instagram.com/p/${reelId}/embed/"></iframe>`);
+        document.write(`<iframe src="https://www.instagram.com/p/${reelId}/embed/" scrolling="no" style="border:none; overflow:hidden;"></iframe>`);
       }
     </script>
   </div>
