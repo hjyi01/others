@@ -1,25 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+  <meta charset="UTF-8">
   <style>
-    body, html { margin: 0; padding: 0; overflow: hidden; height: 100%; width: 100%; }
-    #player-container { display: flex; justify-content: center; align-items: center; height: 100vh; }
-    iframe { border: none; width: 100%; height: 100%; }
+    body, html { margin: 0; padding: 0; display: flex; justify-content: center; background-color: transparent; }
+    #reels-container { width: 100%; max-width: 540px; }
   </style>
 </head>
 <body>
-  <div id="player-container"></div>
+  <div id="reels-container"></div>
+
   <script>
-    // URL에서 reel_id 파라미터를 읽어옵니다. (예: reel.html?id=C_xyz123)
     const params = new URLSearchParams(window.location.search);
     const reelId = params.get('id');
-    
+
     if (reelId) {
-      const container = document.getElementById('player-container');
-      // 인스타그램 공식 임베드 URL 구조 활용
-      container.innerHTML = `<iframe src="https://www.instagram.com/reels/${reelId}/embed/" allowtransparency="true" allowfullscreen="true" frameborder="0" scrolling="no"></iframe>`;
+      const container = document.getElementById('reels-container');
+      // 인스타그램 공식 임베드 구조
+      container.innerHTML = `
+        <blockquote class="instagram-media" 
+                    data-instgrm-permalink="https://www.instagram.com/reel/${reelId}/" 
+                    data-instgrm-version="14" 
+                    style="width:100%; margin:0; padding:0;">
+        </blockquote>
+      `;
+      
+      // 인스타그램 임베드 스크립트 동적 로드
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = "//www.instagram.com/embed.js";
+      document.body.appendChild(script);
+      
+      // 스크립트 로드 후 인스타그램 프로세서 실행
+      script.onload = () => {
+        if (window.instgrm) {
+          window.instgrm.Embeds.process();
+        }
+      };
     } else {
-      document.body.innerHTML = "릴스 ID가 입력되지 않았습니다.";
+      document.body.innerHTML = "릴스 ID가 없습니다.";
     }
   </script>
 </body>
